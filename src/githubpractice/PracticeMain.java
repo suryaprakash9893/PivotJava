@@ -6,7 +6,7 @@ public class PracticeMain {
 		//Instantiating a class.
 		PracticeGit repo = new PracticeGit();
 		
-		//calling a function
+		//calling a function or invoking a method
 		repo.tryGit();
 
 	}
