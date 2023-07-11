@@ -24,9 +24,6 @@ public class LoginValidation {
 				System.out.println("You are logged in to the application");
 				break;
 
-			} else if (attempt == 4) {
-				System.out.println("Account locked. Maxed 3 attempts.");
-				break;
 			} else {
 
 				attempt += 1;

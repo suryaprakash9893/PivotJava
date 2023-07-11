@@ -9,9 +9,22 @@ public class TankMain {
 
 		FillTank fillLevel = new FillTank();
 		Scanner waterlevel = new Scanner(System.in);
+		
+		System.out.println("Enter Max Tank capacity=");
+		fillLevel.maxTankCapacity=waterlevel.nextDouble();
+		
+		System.out.println("Enter Max Fill capacity=");
+		fillLevel.maxFillCapacity=waterlevel.nextDouble();
+		
+		System.out.println("Enter Fill Rate=");
+		fillLevel.fillRate=waterlevel.nextDouble();
 
 		System.out.println("Enter current water level=");
-		fillLevel.currentTankCapacity = waterlevel.nextDouble();
+		fillLevel.currentTankLevel = waterlevel.nextDouble();
+		
+		
+		
+		
 		fillLevel.measureTank();
 	}
 

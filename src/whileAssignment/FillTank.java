@@ -1,18 +1,18 @@
 package whileAssignment;
 
 public class FillTank {
-	double currentTankCapacity;
+	double currentTankLevel,maxFillCapacity,fillRate,maxTankCapacity;
 
 	void measureTank() {
-		while (currentTankCapacity <= 100) {
+		while (currentTankLevel <= maxFillCapacity) {
 
-			currentTankCapacity += 10;
+			currentTankLevel += fillRate;
 
-			if (currentTankCapacity > 100) {
-				System.out.println("Can't add 10L of water.Reached maximum tank capacity.");
+			if (currentTankLevel > maxFillCapacity) {
+				System.out.println("Can't add"+fillRate+ " L of water.Reached maximum tank capacity.");
 				break;
 			}
-			System.out.println("Added 10L water from bucket.Current waterlevel in the tank is " + currentTankCapacity + "L");
+			System.out.println("Added "+fillRate+" L water from bucket.Current waterlevel in the tank is " + currentTankLevel + "L");
 		}
 	}
 }

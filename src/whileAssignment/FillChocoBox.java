@@ -2,17 +2,17 @@ package whileAssignment;
 
 public class FillChocoBox {
 	
-	int currentNumberOfChoco;
+	int currentNumberOfChoco,boxCapacity,chocoCount;
 	
-	void measureChocoBox() {
-		while (currentNumberOfChoco<=63) {
-			currentNumberOfChoco+=5;
+	void addChocolatesToChocoBox() {
+		while (currentNumberOfChoco<=boxCapacity) {
+			currentNumberOfChoco+=chocoCount;
 			
-			if (currentNumberOfChoco>63) {
-				System.out.println("Box capacity is 63 chocolates. Can't add 5 more chocolates.");
+			if (currentNumberOfChoco>boxCapacity) {
+				System.out.println("Box capacity is "+boxCapacity +" Chocolates.Can't add 5 more chocolates.");
 				break;
 			}
-			System.out.println("Added 5 more chocolate. Choco box now has "+currentNumberOfChoco+" chocolates.");
+			System.out.println("Added "+ chocoCount + " more chocolates. Choco box now has "+currentNumberOfChoco+" chocolates.");
 		}
 	}
 }
