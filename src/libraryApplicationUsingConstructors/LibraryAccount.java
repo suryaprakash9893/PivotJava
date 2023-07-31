@@ -1,17 +1,28 @@
 package libraryApplicationUsingConstructors;
 
 public class LibraryAccount {
-
-	int accountNumber;
+	String accountNumber;
 	String accountHolderName;
 	String accountPassword;
-	Books bookBorrowed;
+	String bookBorrowed1,bookBorrowed2;
+	int numberOfBooksBorrowed;
 
-	LibraryAccount(String nameOfAccount, int idNumberOfAccount, String passwordOfAccount, Books borrowedBooks) {
+	LibraryAccount(String nameOfAccount, String idNumberOfAccount, String passwordOfAccount,String borrowedBooks1,String borrowedBooks2,int noOfBooksBorrowed) {
 		accountHolderName = nameOfAccount;
 		accountNumber = idNumberOfAccount;
 		accountPassword = passwordOfAccount;
-		bookBorrowed = borrowedBooks;
+		bookBorrowed1 = borrowedBooks1;
+		bookBorrowed2=borrowedBooks2;
+		numberOfBooksBorrowed=noOfBooksBorrowed;
 	}
 
+//	String getBookName() {
+//		int i;
+//		for (i = 0; i < bookBorrowed.length; i++) {
+//			if (bookBorrowed[i] == null)
+//				return "No";
+//		}
+//		return bookBorrowed[i];
+//
+//	}
 }
