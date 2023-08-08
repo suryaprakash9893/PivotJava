@@ -1,5 +1,6 @@
 package libraryApplicationUsingConstructors;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import libraryApplicationUsingConstructors.Books.BookType;
@@ -7,6 +8,7 @@ import libraryApplicationUsingConstructors.Books.BookType;
 public class Library {
 
 	Scanner sc = new Scanner(System.in);
+	String[] booksBorrowed = { "null", "null" };
 
 	Books diaryOfAnneFrank = new Books(BookType.BIOGRAPHY, "Anne_Frank", "The_Diary_of_a_Young_Girl", 3, false);
 	Books becoming = new Books(BookType.BIOGRAPHY, "Michelle_Obama", "Becoming", 2, false);
@@ -25,30 +27,22 @@ public class Library {
 	Books[] libraryBooks = { diaryOfAnneFrank, becoming, harryPotter2, harryPotter4, iceAndFire, hobbit, lordOfRings,
 			mockingBird, fourWinds, daVinciCode, bodyInTheLib, walkToRemember, noteBook };
 
-	LibraryAccount anu = new LibraryAccount("Anu", "1220", "password", "empty", "empty", 0);
-	LibraryAccount aman = new LibraryAccount("Aman", "1221", "password1", "Goblet_of_Fire", "Chamber_of_Secrets", 2);
-	LibraryAccount gopi = new LibraryAccount("Gopi", "1222", "password2", "The_Lord_of_the_Rings", "The_Hobbit", 2);
-	LibraryAccount binu = new LibraryAccount("Binu", "1223", "password3", "Chamber_of_Secrets", "Goblet_of_Fire", 2);
-	LibraryAccount manu = new LibraryAccount("Manu", "1224", "password4", "The_Notebook", "A_Walk_to_Remember", 2);
+	UserAccount anu = new UserAccount("Anu", "1220", "password", booksBorrowed, 0);
+	UserAccount aman = new UserAccount("Aman", "1221", "password1", booksBorrowed, 0);
+	UserAccount gopi = new UserAccount("Gopi", "1222", "password2", booksBorrowed, 0);
+	UserAccount binu = new UserAccount("Binu", "1223", "password3", booksBorrowed, 0);
+	UserAccount manu = new UserAccount("Manu", "1224", "password4", booksBorrowed, 0);
 
-	LibraryAccount[] libraryAccounts = { anu, aman, gopi, binu, manu };
-	LibraryAccount[] loggedInAccount = new LibraryAccount[1];
+	UserAccount[] libraryAccounts = { anu, aman, gopi, binu, manu };
+	UserAccount[] loggedInAccount = new UserAccount[1];
 
-	boolean validateLoginCredentials() {
+	boolean validateLoginCredentials(String enteredAccountNumber, String enteredPassword) {
 		int loginAttempt = 1;
-		String enteredAccountNumber;
-		String enteredPassword;
 		boolean loginStatus = false;
 
-		while (loginAttempt < 4) {
+		while (loginAttempt < 3) {
 			System.out.println("Login attempt number:" + loginAttempt);
-			System.out.println("Enter your Library Ac/no:");
-			enteredAccountNumber = sc.next();
-			System.out.println("Enter your Password:");
-			enteredPassword = sc.next();
-
 			for (int i = 0; i < libraryAccounts.length; i++) {
-
 				if (libraryAccounts[i].accountNumber.equalsIgnoreCase(enteredAccountNumber)
 						&& (libraryAccounts[i].accountPassword).equals(enteredPassword)) {
 					loginStatus = true;
@@ -58,49 +52,47 @@ public class Library {
 				}
 			}
 			loginAttempt++;
-			if (loginStatus == false && loginAttempt < 4) {
+			if (loginStatus == false && loginAttempt < 3) {
 				System.out.println("Incorrect User id or password. Try again");
 			} else {
 				System.out.println("Too many incorrect login attempts.Please try again later!");
 			}
+			System.out.println("Enter your Account No:");	
+			enteredAccountNumber=sc.next();
+			System.out.println("Enter your password");
+			enteredPassword=sc.next();
 		}
 		return loginStatus;
 	}
 
-	void displayBooksAsPerGenere() {
-		String selectedGenere;
-		boolean status = false;
-		String displayBooksOfAGenere = "Y";
-
-		while (displayBooksOfAGenere.equalsIgnoreCase("Y")) {
-			System.out.println("Select your favourite genere from the list below:");
-			System.out.println("Biography" + "\n" + "Fantasy" + "\n" + "Fiction" + "\n" + "Mystrey" + "\n" + "Romance");
-
-			selectedGenere = sc.next();
-
+	String displayBooksAsPerGenere(String selectedGenere) {
+		boolean isValidGenere = false;
+//		String displayBooksOfAGenere = "Y";
+//	while (displayBooksOfAGenere.equalsIgnoreCase("Y")) {
 			for (int i = 0; i < libraryBooks.length; i++) {
 				if (libraryBooks[i].genereOfBook.genere.equalsIgnoreCase(selectedGenere)
 						&& libraryBooks[i].numberOfCopiesAvailable > 0) {
-					status = true;
+					isValidGenere = true;
 					System.out.println(libraryBooks[i].nameOfBook + "|| No. of Copies available:"
 							+ libraryBooks[i].numberOfCopiesAvailable);
 				}
 			}
-			if (status == false) {
+			if (isValidGenere == false) {
 				System.out.println(selectedGenere
 						+ " category is not available here.Please enter a valid genere from the list above!");
 			}
 
-			System.out.println("Do you want to view the books available in another genere?(Y/N)");
-			displayBooksOfAGenere = sc.next();
-			status = false;
-			if (displayBooksOfAGenere.equalsIgnoreCase("N")) {
+//			System.out.println("Do you want to view the books available in another genere?(Y/N)");
+//			displayBooksOfAGenere = sc.next();
+			isValidGenere = false;
+//			if (displayBooksOfAGenere.equalsIgnoreCase("N")) {
 				System.out.println("Exiting from the book genere menu!");
-			}
-			if ((!displayBooksOfAGenere.equalsIgnoreCase("Y")) && (!displayBooksOfAGenere.equalsIgnoreCase("N"))) {
-				System.out.println("Invalid selection.Exiting from the book genere menu!");
-			}
-		}
+//			}
+//			if ((!displayBooksOfAGenere.equalsIgnoreCase("Y")) && (!displayBooksOfAGenere.equalsIgnoreCase("N"))) {
+//				System.out.println("Invalid selection.Exiting from the book genere menu!");
+//			}
+//		}
+		return null;
 	}
 
 	void bookDetails() {
@@ -117,9 +109,10 @@ public class Library {
 					System.out.println("Book Name:" + libraryBooks[i].nameOfBook);
 					System.out.println("Book Author:" + libraryBooks[i].nameOfAuthor);
 					System.out.println("#ofcopies available" + libraryBooks[i].numberOfCopiesAvailable);
+					int counter = 0;
 					for (i = 0; i < libraryAccounts.length; i++) {
-						if (libraryAccounts[i].bookBorrowed1.equalsIgnoreCase(nameOfBookForDetails)
-								|| libraryAccounts[i].bookBorrowed2.equalsIgnoreCase(nameOfBookForDetails)) {
+						if (libraryAccounts[i].booksBorrowed[counter].equalsIgnoreCase(nameOfBookForDetails)) {
+							counter++;
 							System.out.println(libraryAccounts[i].accountHolderName + " has a copy of this book");
 						}
 					}
@@ -142,20 +135,20 @@ public class Library {
 		}
 	}
 
-	void viewBooksBorrowed() {
-		if (loggedInAccount[0].bookBorrowed1.equalsIgnoreCase("empty")
-				&& loggedInAccount[0].bookBorrowed2.equalsIgnoreCase("empty")) {
-			System.out.println("No books borrowed at present. Can borrow two books.");
-		} else if (loggedInAccount[0].bookBorrowed1.equalsIgnoreCase("empty")) {
-			System.out.println("1 book can be borrowed");
-			System.out.println("Below books are on hand:" + "\n" + loggedInAccount[0].bookBorrowed2);
-		} else if (loggedInAccount[0].bookBorrowed2.equalsIgnoreCase("empty")) {
-			System.out.println();
-			System.out.println(
-					"1 book can be borrowed." + " Below books are on hand:" + "\n" + loggedInAccount[0].bookBorrowed1);
-		} else
-			System.out.println("Below books are on hand:" + "\n" + loggedInAccount[0].bookBorrowed1 + "\n"
-					+ loggedInAccount[0].bookBorrowed2);
+	String viewBooksBorrowed() {
+
+		if (loggedInAccount[0].numberOfBooksBorrowed == 0) {
+			System.out.println("No books borrowed at present.You can borrow 2 books.");
+		} else if (loggedInAccount[0].numberOfBooksBorrowed == 1) {
+			System.out.println("1 more book can be borrowed.");
+		}
+
+		for (int i = 0; i < booksBorrowed.length; i++) {
+			if (!loggedInAccount[0].booksBorrowed[i].equals("null")) {
+				System.out.println(booksBorrowed[i] + " is on hand with " + loggedInAccount[0].accountHolderName);
+			}
+		}
+		return Arrays.toString(loggedInAccount[0].booksBorrowed);
 	}
 
 	void borrowBook() {
@@ -164,65 +157,71 @@ public class Library {
 		int i = 0;
 		boolean canBorrow = false;
 
-		while (loggedInAccount[0].numberOfBooksBorrowed < 3 && takeABook.equalsIgnoreCase("Y")) {
+		while (loggedInAccount[0].numberOfBooksBorrowed < 2 && takeABook.equalsIgnoreCase("Y")) {
 			System.out.println("Enter the bookname to be borrowed:");
 			nameOfBookBorrowed = sc.next();
 			for (i = 0; i < libraryBooks.length; i++) {
-				if (libraryBooks[i].nameOfBook.equals(nameOfBookBorrowed) && libraryBooks[i].isBorrowed == false
-						&& !loggedInAccount[0].bookBorrowed1.equalsIgnoreCase(nameOfBookBorrowed)
-						&& !loggedInAccount[0].bookBorrowed2.equalsIgnoreCase(nameOfBookBorrowed)) {
-					libraryBooks[i].isBorrowed = true;
-					libraryBooks[i].numberOfCopiesAvailable--;
-					canBorrow = true;
-					loggedInAccount[0].numberOfBooksBorrowed++;
-					libraryBooks[i].isBorrowed = false;
-					if(loggedInAccount[0].bookBorrowed1.equalsIgnoreCase("empty")) {
-						loggedInAccount[0].bookBorrowed1=nameOfBookBorrowed;
-					}else {
-						loggedInAccount[0].bookBorrowed2=nameOfBookBorrowed;
+				int counter = 0;
+				for (counter = 0; counter < booksBorrowed.length; counter++) {
+					if (libraryBooks[i].nameOfBook.equals(nameOfBookBorrowed) && libraryBooks[i].isBorrowed == false
+							&& loggedInAccount[0].booksBorrowed[counter].equals("null")) {
+						libraryBooks[i].isBorrowed = true;
+						libraryBooks[i].numberOfCopiesAvailable--;
+						canBorrow = true;
+						loggedInAccount[0].numberOfBooksBorrowed++;
+						// libraryBooks[i].isBorrowed = false;
+						if (loggedInAccount[0].booksBorrowed[counter].equals("null")) {
+							loggedInAccount[0].booksBorrowed[counter] = nameOfBookBorrowed;
+							System.out.println(libraryBooks[i].nameOfBook + " is now borrowed by "
+									+ loggedInAccount[0].accountHolderName);
+							break;
+							// return libraryAccounts[i].bookBorrowed;
+						}
 					}
-					System.out.println(libraryBooks[i].nameOfBook + " has been borrowed by"+ loggedInAccount[0].accountHolderName);
-					break;
-					// return libraryAccounts[i].bookBorrowed;
-				} 
+				}
 			}
-			if(canBorrow == false) {
+			if (canBorrow == false) {
 				System.out.println(nameOfBookBorrowed + " can't be borrowed.Please choose another book.");
 			}
+			canBorrow = false;
 			System.out.println("Do you want to take another book?(Y/N)");
 			takeABook = sc.next();
-			canBorrow = false;
 		}
-		if(loggedInAccount[0].numberOfBooksBorrowed==2) {
-		System.out.println("Max limit of 2 books already borrowed. Please return a book before you can borrow any other books.");	
-		}				
+		if (loggedInAccount[0].numberOfBooksBorrowed == 2 && takeABook.equalsIgnoreCase("Y")) {
+			System.out.println(
+					"Max limit of 2 books already borrowed. Please return a book before you can borrow any other books.");
+		}
 	}
 
 	void returnBook() {
 		String bookToReturn;
 		String returnABook = "Y";
+		boolean canReturn = false;
+
 		while (loggedInAccount[0].numberOfBooksBorrowed > 0 && returnABook.equalsIgnoreCase("Y")) {
 			System.out.println("Enter the bookname you want to return:");
 			bookToReturn = sc.next();
-			if (loggedInAccount[0].bookBorrowed1.equalsIgnoreCase(bookToReturn)
-					|| loggedInAccount[0].bookBorrowed2.equalsIgnoreCase(bookToReturn)) {
-				for (int i = 0; i < libraryBooks.length; i++) {
-					if (libraryBooks[i].nameOfBook.equals(bookToReturn)) {
+
+			for (int i = 0; i < libraryBooks.length; i++) {
+				int counter = 0;
+				for (counter = 0; counter < booksBorrowed.length; counter++) {
+
+					if (loggedInAccount[0].booksBorrowed[counter].equalsIgnoreCase(bookToReturn)
+							&& (libraryBooks[i].nameOfBook.equals(bookToReturn))) {
+
 						libraryBooks[i].numberOfCopiesAvailable++;
+						libraryBooks[i].isBorrowed = false;
 						loggedInAccount[0].numberOfBooksBorrowed--;
+						canReturn = true;
 						System.out.println(libraryBooks[i].nameOfBook + " has been returned.");
-						if (loggedInAccount[0].bookBorrowed1.equalsIgnoreCase(bookToReturn)) {
-							loggedInAccount[0].bookBorrowed1 = "empty";
-							break;
-						} else if (loggedInAccount[0].bookBorrowed2.equalsIgnoreCase(bookToReturn)) {
-							loggedInAccount[0].bookBorrowed2 = "empty";
-							break;
-						}
+						loggedInAccount[0].booksBorrowed[counter] = "null";
 					}
 				}
-			} else {
+			}
+			if (canReturn == false) {
 				System.out.println(bookToReturn + " can't be returned.");
 			}
+			canReturn = false;
 			System.out.println("Press Y return a book...");
 			returnABook = sc.next();
 		}

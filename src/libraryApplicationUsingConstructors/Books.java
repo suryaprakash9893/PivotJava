@@ -22,9 +22,9 @@ public class Books {
 	
 	enum BookType{
 		BIOGRAPHY("biography"),
+		MYSTREY("mystrey"),
 		FANTASY("fantasy"),
 		FICTION("fiction"),
-		MYSTREY("mystrey"),
 		ROMANCE("romance");
 		
 		String genere;

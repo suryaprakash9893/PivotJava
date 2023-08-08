@@ -7,12 +7,18 @@ public class LibraryMain {
 	public static void main(String[] args) {
 		Library torontoPublic = new Library();
 		Scanner sc = new Scanner(System.in);
-		String libraryFunction;
-		String performAction = "Y";
+		String libraryFunction, performAction = "Y";
 		boolean logout = false;
 
-		System.out.println("Welcome to Online Library!");
-		boolean loginValidation = torontoPublic.validateLoginCredentials();
+		String userName, password, selectedGenere;
+
+		System.out.println("Welcome to Online Library!" + "\n" + "Enter your Account No:");
+		userName = sc.next();
+		System.out.println("Enter your password");
+		password = sc.next();
+
+		boolean loginValidation = torontoPublic.validateLoginCredentials(userName, password);
+
 		System.out.println("-------------------------------------------------------------------------------");
 		if (loginValidation == true) {
 
@@ -20,14 +26,18 @@ public class LibraryMain {
 				System.out.println("Please choose your preffered function from the list below:");
 				System.out.println("To view our available books categorised by genere:" + " Press 1");
 				System.out.println("To get details regarding a book: " + " Press 2");
-				System.out.println("To view borrowed books in hand:"+" Press 3");
+				System.out.println("To view borrowed books in hand:" + " Press 3");
 				System.out.println("To Borrow a book: " + " Press 4");
 				System.out.println("To return a book:" + " Press 5");
 				System.out.println("Logout:" + " Press 6");
 				libraryFunction = sc.next();
 				switch (libraryFunction) {
 				case "1":
-					torontoPublic.displayBooksAsPerGenere();
+					System.out.println("Select your favourite genere from the list below:");
+					System.out.println(
+							"Biography" + "\n" + "Fantasy" + "\n" + "Fiction" + "\n" + "Mystrey" + "\n" + "Romance");
+					selectedGenere = sc.next();
+					torontoPublic.displayBooksAsPerGenere(selectedGenere);
 					break;
 				case "2":
 					torontoPublic.bookDetails();
@@ -54,12 +64,13 @@ public class LibraryMain {
 				} else if (logout == false) {
 					System.out.println("Do you want to perform another Library function? Press Y to continue...");
 					performAction = sc.next();
-				//	while()
+					// while()
 					if (performAction.equalsIgnoreCase("N")) {
 						System.out.println("Exiting the library application...");
 					}
 					if (!performAction.equalsIgnoreCase("Y") && (!performAction.equalsIgnoreCase("N"))) {
-						System.out.println(performAction+" is an invalid selection.Exiting the library application...");
+						System.out
+								.println(performAction + " is an invalid selection.Exiting the library application...");
 					}
 				}
 				System.out.println("-------------------------------------------------------------------------------");
@@ -70,7 +81,11 @@ public class LibraryMain {
 			System.out.println("Do you want to view the books available categorised by genere?(Y/N)");
 			performAction = sc.next();
 			while (performAction.equalsIgnoreCase("Y")) {
-				torontoPublic.displayBooksAsPerGenere();
+				System.out.println("Select your favourite genere from the list below:");
+				System.out.println(
+						"Biography" + "\n" + "Fantasy" + "\n" + "Fiction" + "\n" + "Mystrey" + "\n" + "Romance");
+				selectedGenere = sc.next();
+				torontoPublic.displayBooksAsPerGenere(selectedGenere);
 				System.out.println("Do you want to view the books available categorised by genere?(Y/N)");
 				performAction = sc.next();
 			}
