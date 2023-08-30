@@ -79,7 +79,7 @@ public class CruiseOperations {
 	public int getnoOfAdultsForTheSelectedCruise() {
 		System.out.println("---------Please read the instructions prior to booking---------");
 		System.out.println("Person above 12 years of age is considered an Adult." + "\n"
-				+ "Person below 12 years of age is considered as a Kid." + "\n");
+				+ "Person below 12 years of age is considered as a Kid." + "\n"+"Children below 5 years of age can avail free services at Cordella:)");
 		String noOfAdultTickets = "0";
 		int noOfAdults = 0;
 		while (noOfAdultTickets.equals("0")) {
@@ -126,11 +126,11 @@ public class CruiseOperations {
 					System.out.println("Enter the age for Child " + (i + 1) + ":");
 					enteredAgeOfKid = sc.next();
 					int enteredAge = Integer.parseInt(enteredAgeOfKid);
-					if (enteredAge < 12) {
+					if (enteredAge <= 11) {
 						kidsAge[i] = enteredAge;
 						i++;
 						noOfKids--;
-					} else if (enteredAge > 11) {
+					} else if (enteredAge >= 12) {
 						System.out.println(enteredAge
 								+ " years is not a valid age for a kid. Children below 12 years is considered as a kid.Please re-enter the age.");
 					}
@@ -147,7 +147,7 @@ public class CruiseOperations {
 	public int calculateNoOfChargableKidsTickets(int[] kidsAge) {
 		int noOfChargableKidsTickets = 0;
 		for (int i = 0; i < kidsAge.length; i++) {
-			if (kidsAge[i] > 5) {
+			if (kidsAge[i] >= 5) {
 				noOfChargableKidsTickets++;
 			}
 		}

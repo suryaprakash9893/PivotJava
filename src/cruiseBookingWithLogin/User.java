@@ -1,10 +1,12 @@
 package cruiseBookingWithLogin;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class User {
 	private String nameOfUser;
-	private long phoneNoOfUser;
+	private String phoneNoOfUser;
 	private String email;
 	private String password;
 
@@ -13,7 +15,7 @@ public class User {
 	public User() {
 	}
 
-	private User(String email, String password, String nameOfUser, long phoneNoOfUser) {
+	private User(String email, String password, String nameOfUser, String phoneNoOfUser) {
 		this.email = email;
 		this.password = password;
 		this.nameOfUser = nameOfUser;
@@ -29,14 +31,36 @@ public class User {
 		return nameOfUser = sc.next();
 	}
 
-	public long getPhoneNoOfUser() {
+	public String getPhoneNoOfUser() {
 		return phoneNoOfUser;
 	}
 
-	public long setPhoneNoOfUser() {
-		System.out.println("Enter your phone#:");
-		// handle Input mis-match exception using try catch
-		return phoneNoOfUser = sc.nextLong();
+	public String setPhoneNoOfUser() {
+		// To avoid Input mis-match exception used String for input. try catch to avoid
+		// number format.
+		System.out.println("Enter your Phone#");
+		return phoneNoOfUser = sc.next();
+	}
+//		while (phoneNoOfUser.equalsIgnoreCase("0")) {
+//			System.out.println("Enter your phone#:");
+//			phoneNoOfUser = sc.next();
+//			var validPhoneNo = validatePhoneNo(phoneNoOfUser);
+//			if (validPhoneNo == false) {
+//				System.out.println("Invalid Phone #.Try again!");
+//				phoneNoOfUser = "";
+//			}else if(validPhoneNo == true) {
+//				return phoneNoOfUser;
+//			}
+//		}
+
+	public boolean validatePhoneNo(String phoneNoOfUser) {
+		String regex = "[0-9]+";
+		Pattern p = Pattern.compile(regex);
+		if(phoneNoOfUser==null) {
+			return false;
+		}
+		Matcher m = p.matcher(phoneNoOfUser);
+		return m.matches();
 	}
 
 	public String getEmail() {
@@ -48,17 +72,12 @@ public class User {
 		return email = sc.next();
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
 	public String setPassword() {
 		System.out.println("Enter the password you want to use:");
 		return password = sc.next();
 	}
 
 	public User getUserDetails() {
-
 		setEmail();
 		setPassword();
 		setNameOfUser();
@@ -69,23 +88,39 @@ public class User {
 	}
 
 	public User updateUserDetails(User user) {
-		System.out.println("Please enter the information you want to change.");
-		System.out.println("1.Password" + "\n" + "2.Phone number" + "\n" + "3.Email");
-		String enteredOption = sc.next();
-		switch (enteredOption) {
-		case "1":
-			user.password = setPassword();
-			break;
-		case "2":
-			user.phoneNoOfUser = setPhoneNoOfUser();
-			break;
-		case "3":
-			user.email = setEmail();
-			break;
-		default:
-			System.out.println("Enter a valid selection");
-			break;
+		String updatePersonalInfo = "";
+		System.out.println("Do you want to update your personal info?Press Y..." + "\n"
+				+ "Press any other key to exit the application.");
+		updatePersonalInfo = sc.next();
+		while (updatePersonalInfo.equalsIgnoreCase("Y")) {
+			boolean loginAttempt = user.loginAttempts(user);
+			if (loginAttempt == true && updatePersonalInfo.equalsIgnoreCase("Y")) {
+				System.out.println("Please enter the option you want to change.");
+				System.out.println("1.Password" + "\n" + "2.Phone number" + "\n" + "3.Email");
+				String enteredOption = sc.next();
+				switch (enteredOption) {
+				case "1":
+					user.password = setPassword();
+					System.out.println("Your Password is Updated successfully.");
+					break;
+				case "2":
+					user.phoneNoOfUser = setPhoneNoOfUser();
+					System.out.println("Your Phone# is Updated to " + user.phoneNoOfUser + " successfully.");
+					break;
+				case "3":
+					user.email = setEmail();
+					System.out.println("Your email is Updated to " + user.email + " successfully.");
+					break;
+				default:
+					System.out.println("Enter a valid selection");
+					break;
+				}
+			}
+			System.out.println("Do you want to make another change to your profile?Press Y..." + "\n"
+					+ "Press any other key to exit application.");
+			updatePersonalInfo = sc.next();
 		}
+		System.out.println("Exiting the application.Thanks for choosing Cordella cruises " + user.getNameOfUser());
 		return user;
 	}
 
@@ -121,6 +156,14 @@ public class User {
 			}
 		}
 		return loginStatus;
+	}
+
+	public void displayUserDetails(User user) {
+		System.out.println("----------------User Details----------------");
+		System.out.println("Name: " + user.nameOfUser);
+		System.out.println("email: " + user.email);
+		System.out.println("Phone#: " + user.phoneNoOfUser);
+		System.out.println("---------------------------------------------------");
 	}
 
 }
