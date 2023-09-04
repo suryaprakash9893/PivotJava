@@ -2,8 +2,6 @@ package cruiseAndHotelBooking;
 
 import java.util.Scanner;
 
-import cruiseBookingWithLogin.CruiseDetails;
-
 public class Cruise extends User {
 	public String cruiseName;
 	public double priceForAnAdultPerDay;
@@ -134,16 +132,6 @@ public class Cruise extends User {
 		System.out.println("Net Price for this trip                  :$" + netPriceForBookedTrip);
 	}
 
-	public void printDetailsOfSelectedCruise(CruiseDetails selectedCruise) {
-		System.out.println("You have selected " + selectedCruise.getCruiseName() + " which is a "
-				+ selectedCruise.getNoOfDays() + " day Cruise.");
-		System.out.println("Price for Adults:(above 12 years of age):         $ " + selectedCruise.getPriceForAdults()
-				+ "  per day.");
-		System.out.println("Price for Kids(above 5 years of age):             $ " + selectedCruise.getPriceForChildren()
-				+ "  per day." + "\n"
-				+ "-------------------------------------------------------------------------------------------------------");
-	}
-	
 	// Method#12:To Book a cruise
 	public void bookCruise(User user) {
 		displayOptions();
@@ -154,40 +142,55 @@ public class Cruise extends User {
 			enteredSelection = sc.next();
 			switch (enteredSelection) {
 			case "1":
-				user = new ScenicCruise(user, "Scenic Cruise", 43.99, 12.99, 3);			
+				user = new ScenicCruise(user, "Scenic Cruise", 43.99, 12.99, 3);
 				((Cruise) user).printDetailsOfSelectedCruise((Cruise) user);
-				int noOfAdults=user.getnoOfAdultsForTheSelectedCruise();
-				int noOfChargeableKids=user.calculateNoOfChargableKidsTickets(user.getKidsAge(getnoOfKidsForTheSelectedCruise()));
-				var isFoodPrebooked=((Cruise) user).bookFood();
-				var isSpaBooked=((ScenicCruise) user).bookSpaAtScenicCruise((Cruise) user,noOfAdults,noOfChargeableKids);
-				
-				((ScenicCruise) user).checkoutScenicCruise((Cruise) user,noOfAdults,noOfChargeableKids,isFoodPrebooked,isSpaBooked);
+				int noOfAdults = user.getnoOfAdultsForTheSelectedCruise();
+				int noOfChargeableKids = user
+						.calculateNoOfChargableKidsTickets(user.getKidsAge(getnoOfKidsForTheSelectedCruise()));
+				var isFoodPrebooked = ((Cruise) user).bookFood();
+				var isSpaBooked = ((ScenicCruise) user).bookSpaAtScenicCruise((Cruise) user, noOfAdults,
+						noOfChargeableKids);
+
+				((ScenicCruise) user).checkoutScenicCruise((Cruise) user, noOfAdults, noOfChargeableKids,
+						isFoodPrebooked, isSpaBooked);
 				break;
 			case "2":
 				user = new SunsetCruise(user, "Sunset Cruise", 52.99, 15.99, 1);
 				((Cruise) user).printDetailsOfSelectedCruise((Cruise) user);
-				noOfAdults=user.getnoOfAdultsForTheSelectedCruise();
-				noOfChargeableKids=user.calculateNoOfChargableKidsTickets(user.getKidsAge(getnoOfKidsForTheSelectedCruise()));;
-				var isCLDinnerBooked=((SunsetCruise) user).bookSpaAtScenicCruise((Cruise) user,noOfAdults,noOfChargeableKids);
-				((SunsetCruise) user).checkout((Cruise) user,noOfAdults,noOfChargeableKids,((Cruise) user).bookFood(),isCLDinnerBooked);		
+				noOfAdults = user.getnoOfAdultsForTheSelectedCruise();
+				noOfChargeableKids = user
+						.calculateNoOfChargableKidsTickets(user.getKidsAge(getnoOfKidsForTheSelectedCruise()));
+				;
+				var isCLDinnerBooked = ((SunsetCruise) user).bookSpaAtScenicCruise((Cruise) user, noOfAdults,
+						noOfChargeableKids);
+				((SunsetCruise) user).checkout((Cruise) user, noOfAdults, noOfChargeableKids,
+						((Cruise) user).bookFood(), isCLDinnerBooked);
 				break;
-				
+
 			case "3":
 				user = new DiscoveryCruise(user, "Discovery Cruise", 39.99, 9.99, 4);
 				((Cruise) user).printDetailsOfSelectedCruise((Cruise) user);
-				noOfAdults=user.getnoOfAdultsForTheSelectedCruise();
-				noOfChargeableKids=user.calculateNoOfChargableKidsTickets(user.getKidsAge(getnoOfKidsForTheSelectedCruise()));;
-				var isAdventureGamesBooked=((DiscoveryCruise) user).bookSpaAtScenicCruise((Cruise) user,noOfAdults,noOfChargeableKids);
-				((DiscoveryCruise) user).checkout((Cruise) user,noOfAdults,noOfChargeableKids,((Cruise) user).bookFood(),isAdventureGamesBooked);		
+				noOfAdults = user.getnoOfAdultsForTheSelectedCruise();
+				noOfChargeableKids = user
+						.calculateNoOfChargableKidsTickets(user.getKidsAge(getnoOfKidsForTheSelectedCruise()));
+				;
+				var isAdventureGamesBooked = ((DiscoveryCruise) user).bookSpaAtScenicCruise((Cruise) user, noOfAdults,
+						noOfChargeableKids);
+				((DiscoveryCruise) user).checkout((Cruise) user, noOfAdults, noOfChargeableKids,
+						((Cruise) user).bookFood(), isAdventureGamesBooked);
 				break;
-				
+
 			case "4":
 				user = new MystreyCruise(user, "Mystrey Cruise", 45.99, 12.99, 2);
 				((Cruise) user).printDetailsOfSelectedCruise((Cruise) user);
-				noOfAdults=user.getnoOfAdultsForTheSelectedCruise();
-				noOfChargeableKids=user.calculateNoOfChargableKidsTickets(user.getKidsAge(getnoOfKidsForTheSelectedCruise()));;
-				var isCasinoTableBooked=((MystreyCruise) user).bookSpaAtScenicCruise((Cruise) user,noOfAdults,noOfChargeableKids);
-				((MystreyCruise) user).checkout((Cruise) user,noOfAdults,noOfChargeableKids,((Cruise) user).bookFood(),isCasinoTableBooked);		
+				noOfAdults = user.getnoOfAdultsForTheSelectedCruise();
+				noOfChargeableKids = user
+						.calculateNoOfChargableKidsTickets(user.getKidsAge(getnoOfKidsForTheSelectedCruise()));
+				;
+				var isCasinoTableBooked = ((MystreyCruise) user).bookSpaAtScenicCruise((Cruise) user, noOfAdults,
+						noOfChargeableKids);
+				((MystreyCruise) user).checkout((Cruise) user, noOfAdults, noOfChargeableKids,
+						((Cruise) user).bookFood(), isCasinoTableBooked);
 				break;
 
 			default:
